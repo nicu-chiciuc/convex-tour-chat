@@ -9,8 +9,7 @@
     "predev": "convex dev --run init --until-success"
   },
   "dependencies": {
-    "@auth/core": "^0.34.2",
-    "@convex-dev/auth": "^0.0.52",
+    "@convex-dev/auth": "0.0.50",
     "@faker-js/faker": "^8.0.2",
     "convex": "1.14.1",
     "prettier": "3.2.5",

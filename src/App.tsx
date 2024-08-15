@@ -2,6 +2,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
+import { SignIn } from "./SignIn";
 
 // For demo purposes. In a real app, you'd have real user data.
 const NAME = faker.person.firstName();
@@ -47,6 +48,8 @@ export default function App() {
           </p>
         </article>
       ))}
+      <SignIn />
+
       <form
         onSubmit={async (e) => {
           e.preventDefault();

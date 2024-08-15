@@ -9,6 +9,7 @@ export function SignIn() {
     <form
       onSubmit={(event) => {
         event.preventDefault();
+        console.log(event.currentTarget);
         const formData = new FormData(event.currentTarget);
         void signIn("password", formData);
       }}

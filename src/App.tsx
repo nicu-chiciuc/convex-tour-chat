@@ -1,13 +1,34 @@
-import { useQuery, useMutation } from "convex/react";
+import {
+  useQuery,
+  useMutation,
+  Authenticated,
+  AuthLoading,
+  Unauthenticated,
+} from "convex/react";
 import { api } from "../convex/_generated/api";
 import { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 import { SignIn } from "./SignIn";
+import { SignOut } from "./SignOut";
 
 // For demo purposes. In a real app, you'd have real user data.
 const NAME = faker.person.firstName();
-
 export default function App() {
+  return (
+    <>
+      <AuthLoading>loading</AuthLoading>
+      <Unauthenticated>
+        <SignIn />
+      </Unauthenticated>
+      <Authenticated>
+        <SignOut />
+        <Content />
+      </Authenticated>
+    </>
+  );
+}
+
+function Content() {
   const messages = useQuery(api.messages.list);
   const sendMessage = useMutation(api.messages.send);
   const likeMessage = useMutation(api.messages.like);

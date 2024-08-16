@@ -4,7 +4,7 @@ import { useState } from "react";
 export function SignIn() {
   const { signIn } = useAuthActions();
   const [step, setStep] = useState<"signUp" | "signIn">("signIn");
-  console.log("hello");
+
   return (
     <form
       onSubmit={(event) => {

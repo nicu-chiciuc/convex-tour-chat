@@ -7,7 +7,8 @@ export default defineSchema({
   ...authTables,
 
   messages: defineTable({
-    author: v.string(),
+    author: v.optional(v.string()),
+    authorId: v.optional(v.id("users")),
     body: v.string(),
   }),
 

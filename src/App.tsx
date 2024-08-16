@@ -4,6 +4,7 @@ import {
   Authenticated,
   AuthLoading,
   Unauthenticated,
+  useAction,
 } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { useEffect, useState } from "react";
@@ -11,8 +12,6 @@ import { faker } from "@faker-js/faker";
 import { SignIn } from "./SignIn";
 import { SignOut } from "./SignOut";
 
-// For demo purposes. In a real app, you'd have real user data.
-const NAME = faker.person.firstName();
 export default function App() {
   return (
     <>
@@ -32,6 +31,11 @@ function Content() {
   const messages = useQuery(api.messages.list);
   const sendMessage = useMutation(api.messages.send);
   const likeMessage = useMutation(api.messages.like);
+  const userInfo = useQuery(api.authInfo.currentUser);
+
+  // const asdf = useH(api.)
+
+  const userName = userInfo?.name ?? userInfo?.email ?? "Anonymous";
 
   const [newMessageText, setNewMessageText] = useState("");
 
@@ -47,13 +51,13 @@ function Content() {
       <header>
         <h1>Convex Chat</h1>
         <p>
-          Connected as <strong>{NAME}</strong>
+          Connected as <strong>{userName}</strong>
         </p>
       </header>
       {messages?.map((message) => (
         <article
           key={message._id}
-          className={message.author === NAME ? "message-mine" : ""}
+          className={message.author === userName ? "message-mine" : ""}
         >
           <div>{message.author}</div>
 
@@ -61,7 +65,7 @@ function Content() {
             {message.body}
             <button
               onClick={async () => {
-                await likeMessage({ liker: NAME, messageId: message._id });
+                await likeMessage({ liker: userName, messageId: message._id });
               }}
             >
               {message.likes ? <span>{message.likes}</span> : null} 🤍
@@ -74,7 +78,7 @@ function Content() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          await sendMessage({ body: newMessageText, author: NAME });
+          await sendMessage({ body: newMessageText, author: userName });
           setNewMessageText("");
         }}
       >
@@ -90,6 +94,12 @@ function Content() {
           Send
         </button>
       </form>
+
+      <button
+        onClick={async () => {
+          fetch;
+        }}
+      />
     </main>
   );
 }

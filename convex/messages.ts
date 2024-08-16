@@ -33,10 +33,22 @@ export const list = query({
 });
 
 export const send = mutation({
-  args: { body: v.string(), author: v.string() },
-  handler: async (ctx, { body, author }) => {
+  args: {
+    body: v.string(),
+    authorId: v.optional(v.id("users")),
+    author: v.optional(v.string()),
+  },
+  handler: async (ctx, { body, authorId, author }) => {
+    if (!author && !authorId) {
+      throw new Error("Author or authorId must be provided");
+    }
+
+    if (authorId && author) {
+      throw new Error("Only one of author or authorId should be provided");
+    }
+
     // Send a new message.
-    await ctx.db.insert("messages", { body, author });
+    await ctx.db.insert("messages", { body, authorId, author });
 
     if (body.startsWith("@ai") && author !== "AI") {
       // Schedule the chat action to run immediately
